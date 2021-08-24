@@ -1,0 +1,22 @@
+cxx.std = latest
+
+using cxx
+using in
+
+hxx{*}: extension = h
+ixx{*}: extension = inl
+cxx{*}: extension = cpp
+
+# Assume headers are importable unless stated otherwise.
+#
+# hxx{*}: cxx.importable = true
+
+# The test target for cross-testing (running tests under Wine, etc).
+#
+test.target = $cxx.target
+
+
+revision =
+# revision = ($regex.split($process.run(git submodule status), ' ', '')[0])
+# revision = ($regex.split($revision, '\+', '')[0])
+# text $revision

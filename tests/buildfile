@@ -1,9 +1,0 @@
-import libs = lib{glbinding}
-
-import libs += glfw%lib{glfw}
-import libs += glm%lib{glm}
-
-exe{main}: cxx{main} $libs
-{
-  test = true
-}

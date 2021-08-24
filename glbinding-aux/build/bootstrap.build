@@ -1,0 +1,7 @@
+project = glbinding-aux
+
+using version
+using config
+using test
+using install
+using dist

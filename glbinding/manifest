@@ -1,6 +1,7 @@
 : 1
 name: glbinding
 version: 3.1.0
+project: glbinding
 summary: glbinding is a cross-platform C++ binding for the OpenGL API, generated using the gl.xml specification.
 license: MIT
 

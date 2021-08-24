@@ -1,0 +1,21 @@
+: 1
+name: glbinding-aux
+version: 3.1.0
+project: glbinding
+summary: glbinding is a cross-platform C++ binding for the OpenGL API, generated using the gl.xml specification.
+license: MIT
+
+description-file: UPSTREAM.README.md
+
+url: https://glbinding.org/
+src-url: https://github.com/cginternals/glbinding
+doc-url: https://glbinding.org/docs.html
+email: opensource@cginternals.com
+
+package-url: https://github.com/lyrahgames/build2-glbinding
+package-email: lyrahgames@mailbox.org
+
+depends: * build2 >= 0.13.0
+depends: * bpkg >= 0.13.0
+
+depends: glbinding == $
