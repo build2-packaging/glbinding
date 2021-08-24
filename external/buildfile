@@ -1,0 +1,7 @@
+lib{KHRplatform}: KHR/hxx{khrplatform}
+{
+  cc.export.poptions = "-I$src_base"
+}
+cc.poptions =+ "-I$src_base"
+
+hxx{*}: install.subdirs = true

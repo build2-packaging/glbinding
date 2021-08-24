@@ -1,0 +1,39 @@
+./: lib{glbinding-aux}
+
+# Sources
+lib{glbinding-aux}: \
+  hxx{glbinding-aux_export glbinding-aux_features} \
+  include/glbinding-aux/{hxx ixx}{**} source/{hxx ixx cxx}{**}
+
+lib{glbinding-aux}: hxx{glbinding-aux_api}: include = ($cxx.id != 'msvc')
+lib{glbinding-aux}: hxx{glbinding-aux_msvc_api}: include = ($cxx.id == 'msvc')
+
+# Configuration
+include_dirs = "-I$src_base/include" "-I$out_root" "-I$src_root"
+cxx.poptions =+ $include_dirs
+
+include ../glbinding/
+glbinding = ../glbinding/lib{glbinding}
+lib{glbinding-aux}: $glbinding
+
+lib{glbinding-aux}:
+{
+  cxx.export.poptions = $include_dirs
+  cxx.export.libs = $glbinding
+}
+
+obja{*}: cxx.poptions += -DGLBINDING_AUX_STATIC_BUILD -DGLBINDING_AUX_STATIC_DEFINE
+objs{*}: cxx.poptions += -DGLBINDING_AUX_SHARED_BUILD -DGLBINDING_AUX_EXPORTS
+
+liba{glbinding-aux}: \
+  cxx.export.poptions += -DGLBINDING_AUX_STATIC -DGLBINDING_AUX_STATIC_DEFINE
+libs{glbinding-aux}: cxx.export.poptions += -DGLBINDING_AUX_SHARED
+
+# Installation
+hxx{*}: install = include/glbinding-aux/
+include/{hxx ixx}{*}:
+{
+  install = include/
+  install.subdirs = true
+}
+source/{hxx ixx}{*}: install = false

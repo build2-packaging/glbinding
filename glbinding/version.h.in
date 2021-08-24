@@ -1,0 +1,15 @@
+
+#define GLBINDING_PROJECT_NAME "glbinding"
+#define GLBINDING_PROJECT_DESCRIPTION "$summary$"
+
+#define GLBINDING_AUTHOR_ORGANIZATION "CG Internals GmbH"
+#define GLBINDING_AUTHOR_DOMAIN "https://github.com/cginternals/glbinding/"
+#define GLBINDING_AUTHOR_MAINTAINER "opensource@cginternals.com"
+
+#define GLBINDING_VERSION_MAJOR "$glbinding.version.major$"
+#define GLBINDING_VERSION_MINOR "$glbinding.version.minor$"
+#define GLBINDING_VERSION_PATCH "$glbinding.version.patch$"
+#define GLBINDING_VERSION_REVISION "$revision$"
+
+#define GLBINDING_VERSION "$glbinding.version.project$"
+#define GLBINDING_NAME_VERSION "glbinding v$glbinding.version$ $revision$"
