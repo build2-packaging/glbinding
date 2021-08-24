@@ -1,0 +1,1 @@
+exe{cubescape}: {hxx cxx}{**} $libs ../data/cubescape/file{*}

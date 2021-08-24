@@ -9,6 +9,7 @@
 !*.c
 !*.hpp
 !*.cpp
+!*.inl
 !*.in
 
 !.build2/**

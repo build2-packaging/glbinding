@@ -1,0 +1,4 @@
+import libs += opengl%lib{opengl}
+import libs += glew%lib{glew}
+
+exe{comparison}: {hxx ixx cxx}{**} $libs

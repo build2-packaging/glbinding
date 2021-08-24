@@ -2,3 +2,5 @@
 location: glbinding/
 :
 location: glbinding-aux/
+:
+location: examples/

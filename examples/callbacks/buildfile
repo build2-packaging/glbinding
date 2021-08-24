@@ -1,0 +1,2 @@
+exe{callbacks}: {hxx cxx}{**} $libs \
+  ../comparison/ixx{gltest gltest_data}

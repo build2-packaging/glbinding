@@ -1,0 +1,2 @@
+exe{cubescape-log}: {hxx cxx}{**} $libs \
+  ../cubescape/{hxx cxx}{CubeScape RawFile glutils}
