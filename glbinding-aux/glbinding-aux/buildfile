@@ -2,7 +2,7 @@
 
 # Sources
 lib{glbinding-aux}: \
-  hxx{glbinding-aux_export glbinding-aux_features} \
+  hxx{glbinding-aux_export glbinding-aux_features glbinding-aux_api} \
   include/glbinding-aux/{hxx ixx}{**} source/{hxx ixx cxx}{**}
 
 hxx{glbinding-aux_api}: in{glbinding-aux_api}: include = ($cxx.id != 'msvc')
