@@ -2,11 +2,11 @@
 
 # Sources
 lib{glbinding}: \
-  hxx{glbinding-version glbinding_export glbinding_features} \
+  hxx{glbinding-version glbinding_export glbinding_features glbinding_api} \
   include/glbinding/{hxx ixx}{**} source/{hxx ixx cxx}{**}
 
-lib{glbinding}: hxx{glbinding_api}: include = ($cxx.id != 'msvc')
-lib{glbinding}: hxx{glbinding_msvc_api}: include = ($cxx.id == 'msvc')
+hxx{glbinding_api}: in{glbinding_api}: include = ($cxx.id != 'msvc')
+hxx{glbinding_api}: in{glbinding_msvc_api}: include = ($cxx.id == 'msvc')
 
 hxx{glbinding-version}: in{version} $src_root/manifest
 {
@@ -35,13 +35,14 @@ objs{*}: cxx.poptions += -DGLBINDING_SHARED_BUILD -DGLBINDING_EXPORTS
 liba{glbinding}: cxx.export.poptions += -DGLBINDING_STATIC -DGLBINDING_STATIC_DEFINE
 libs{glbinding}: cxx.export.poptions += -DGLBINDING_SHARED
 
-if ($cxx.target.class == 'linux')
+if (($cxx.target.class == 'linux') || ($cxx.target.class == 'macos'))
 {
   # cxx.coptions += -fvisibility=hidden
-  cxx.libs += -ldl -pthread
-  lib{glbinding}: cxx.export.libs += -ldl -pthread
+  cxx.libs += -pthread
+  lib{glbinding}: cxx.export.libs += -pthread
 }
-elif ($cxx.target.class == 'windows')
+
+if ($cxx.target.class == 'windows')
 {
   if ($cxx.id == 'msvc')
   {
@@ -49,6 +50,12 @@ elif ($cxx.target.class == 'windows')
     cxx.coptions += /MP /W4 /wd4251 /wd4592 /wd4127 /Zm200 \
                     /Gw /GS- /GL /GF
   }
+}
+
+if ($cxx.id != 'msvc')
+{
+  lib{glbinding}: cxx.export.libs += -ldl
+  cxx.libs += -ldl
 }
 
 # Installation
