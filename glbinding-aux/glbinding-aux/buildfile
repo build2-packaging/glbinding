@@ -29,11 +29,22 @@ liba{glbinding-aux}: \
   cxx.export.poptions += -DGLBINDING_AUX_STATIC -DGLBINDING_AUX_STATIC_DEFINE
 libs{glbinding-aux}: cxx.export.poptions += -DGLBINDING_AUX_SHARED
 
+switch ($cxx.target.class)
+{
+  case 'linux'
+    cxx.poptions += -DSYSTEM_LINUX
+  case 'macos'
+    cxx.poptions += -DSYSTEM_DARWIN
+  case 'windows'
+    cxx.poptions += -DSYSTEM_WINDOWS
+}
+
+
 if (($cxx.target.class == 'linux') || ($cxx.target.class == 'macos'))
 {
   # cxx.coptions += -fvisibility=hidden
-  cxx.libs += -pthread
-  lib{glbinding}: cxx.export.libs += -pthread
+  cxx.libs += -pthread -ldl
+  lib{glbinding}: cxx.export.libs += -pthread -ldl
 }
 
 if ($cxx.target.class == 'windows')
@@ -44,12 +55,6 @@ if ($cxx.target.class == 'windows')
     cxx.coptions += /MP /W4 /wd4251 /wd4592 /wd4127 /Zm200 \
                     /Gw /GS- /GL /GF
   }
-}
-
-if ($cxx.id != 'msvc')
-{
-  lib{glbinding}: cxx.export.libs += -ldl
-  cxx.libs += -ldl
 }
 
 # Installation
