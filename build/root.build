@@ -17,6 +17,7 @@ hxx{*}: cxx.importable = true
 test.target = $cxx.target
 
 
-revision = ($regex.split($process.run(git submodule status), ' ', '')[0])
-revision = ($regex.split($revision, '\+', '')[0])
-text $revision
+revision =
+# revision = ($regex.split($process.run(git submodule status), ' ', '')[0])
+# revision = ($regex.split($revision, '\+', '')[0])
+# text $revision
