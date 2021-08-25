@@ -21,5 +21,6 @@ depends: * bpkg >= 0.13.0
 depends: glbinding == $
 depends: glbinding-aux == $
 
-requires: GLEW
+depends: glew
+# requires: GLEW
 requires: glfw3 ; GLFW
