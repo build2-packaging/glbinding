@@ -1,0 +1,1 @@
+exe{glcontexts}: {hxx cxx}{*} $libs

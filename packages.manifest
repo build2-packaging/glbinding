@@ -4,3 +4,5 @@ location: glbinding/
 location: glbinding-aux/
 :
 location: examples/
+:
+location: tools/

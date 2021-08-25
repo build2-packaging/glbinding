@@ -1,0 +1,1 @@
+exe{glinfo}: {hxx cxx}{*} $libs
