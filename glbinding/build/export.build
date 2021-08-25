@@ -1,6 +1,13 @@
 $out_root/
 {
   include glbinding/
+  include glbinding-aux/
 }
 
-export $out_root/glbinding/$import.target
+switch ($name($import.target))
+{
+  case 'glbinding'
+    export $out_root/glbinding/$import.target
+  case 'glbinding-aux'
+    export $out_root/glbinding-aux/$import.target
+}

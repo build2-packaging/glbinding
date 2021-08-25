@@ -1,101 +1,52 @@
 ./: lib{glbinding}
 
-# Sources
+# Library Dependencies
+include ../external/
+intf_libs = ../external/lib{KHRplatform}
+
+lib{glbinding}: $intf_libs
+
+# Source File Dependencies
 lib{glbinding}: \
   hxx{glbinding-version glbinding_export glbinding_features glbinding_api} \
   include/glbinding/{hxx ixx}{**} source/{hxx ixx cxx}{**}
 
-
+# Code Generation
 hxx{glbinding-version}: in{version} $src_root/manifest
 {
   summary = $project.summary
+  revision = ''
   dist = true
   clean = ($src_root != $out_root)
 }
-
-glbinding.macro.import = '__attribute__((visibility("default")))'
-glbinding.macro.export = '__attribute__((visibility("default")))'
-glbinding.macro.hidden = '__attribute__((visibility("hidden")))'
-glbinding.macro.deprecated = '__attribute__((__deprecated__))'
-
-if ($cxx.target.class == 'windows')
-{
-  if ($cxx.id == 'msvc')
-  {
-    glbinding.macro.import = '__declspec(dllimport)'
-    glbinding.macro.export = '__declspec(dllexport)'
-    glbinding.macro.hidden = ''
-    glbinding.macro.deprecated = '__declspec(deprecated)'
-  }
-  else
-  {
-    glbinding.macro.import = ''
-    glbinding.macro.export = ''
-    glbinding.macro.hidden = ''
-    glbinding.macro.deprecated = '__attribute__((__deprecated__))'
-  }
-}
-
 hxx{glbinding_export}: in{glbinding_export}
-
 hxx{glbinding_api}: in{glbinding_api}: include = ($cxx.id != 'msvc')
 hxx{glbinding_api}: in{glbinding_msvc_api}: include = ($cxx.id == 'msvc')
 
-# Configuration
+# Build Options
 include_dirs = "-I$src_base/include" "-I$out_root" "-I$src_root"
-cxx.poptions =+ $include_dirs
-
-include ../external/
-KHRplatform = ../external/lib{KHRplatform}
-lib{glbinding}: $KHRplatform
-
-lib{glbinding}:
-{
-  cxx.export.poptions = $include_dirs
-  cxx.export.libs = $KHRplatform
-}
+cxx.poptions += $default.export.poptions $default.poptions $include_dirs
+cxx.coptions += $default.export.coptions $default.coptions
 
 obja{*}: cxx.poptions += -DGLBINDING_STATIC_DEFINE
 objs{*}: cxx.poptions += -DGLBINDING_EXPORTS
 
+# Export Options
+lib{glbinding}:
+{
+  cxx.export.poptions = $default.export.poptions $include_dirs
+  cxx.export.coptions = $default.export.coptions
+  cxx.export.libs = $default.export.libs $intf_libs
+}
+
 liba{glbinding}: cxx.export.poptions += -DGLBINDING_STATIC_DEFINE
 # libs{glbinding}: cxx.export.poptions +=
 
-switch ($cxx.target.class)
-{
-  case 'linux'
-  {
-    cxx.poptions += -DSYSTEM_LINUX
-    cxx.coptions += -fPIC -fvisibility=hidden
-    cxx.libs += -pthread -ldl
-    lib{glbinding}: cxx.export.libs += -pthread -ldl
-  }
-
-  case 'macos'
-  {
-    cxx.poptions += -DSYSTEM_DARWIN
-    cxx.coptions += -fPIC
-    cxx.libs += -pthread -ldl
-    lib{glbinding}: cxx.export.libs += -pthread -ldl
-  }
-
-  case 'windows'
-  {
-    cxx.poptions += -DSYSTEM_WINDOWS
-    if ($cxx.id == 'msvc')
-    {
-      cxx.poptions += /D_SCL_SECURE_NO_WARNINGS /D_CRT_SECURE_NO_WARNINGS
-      cxx.coptions += /MP /W4 /wd4251 /wd4592 /wd4127 /Zm200 \
-                      /Gw /GS- /GL /GF
-    }
-  }
-}
-
-# Installation
+# Installation of Header Files
 hxx{*}: install = include/glbinding/
+source/{hxx ixx}{*}: install = false
 include/{hxx ixx}{*}:
 {
   install = include/
   install.subdirs = true
 }
-source/{hxx ixx}{*}: install = false

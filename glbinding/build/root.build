@@ -15,8 +15,63 @@ cxx{*}: extension = cpp
 #
 test.target = $cxx.target
 
+# Export Macros
+project.macro.import = '__attribute__((visibility("default")))'
+project.macro.export = '__attribute__((visibility("default")))'
+project.macro.hidden = '__attribute__((visibility("hidden")))'
+project.macro.deprecated = '__attribute__((__deprecated__))'
 
-revision =
-# revision = ($regex.split($process.run(git submodule status), ' ', '')[0])
-# revision = ($regex.split($revision, '\+', '')[0])
-# text $revision
+if ($cxx.target.class == 'windows')
+{
+  if ($cxx.id == 'msvc')
+  {
+    project.macro.import = '__declspec(dllimport)'
+    project.macro.export = '__declspec(dllexport)'
+    project.macro.hidden = ''
+    project.macro.deprecated = '__declspec(deprecated)'
+  }
+  else
+  {
+    project.macro.import = ''
+    project.macro.export = ''
+    project.macro.hidden = ''
+    project.macro.deprecated = '__attribute__((__deprecated__))'
+  }
+}
+
+# Build Options
+default.export.poptions =
+default.export.coptions =
+default.export.libs =
+
+default.poptions =
+default.coptions =
+default.libs =
+
+switch ($cxx.target.class)
+{
+  case 'linux'
+  {
+    default.poptions += -DSYSTEM_LINUX
+    default.coptions += -fPIC -fvisibility=hidden
+    default.export.libs += -pthread -ldl
+  }
+
+  case 'macos'
+  {
+    default.poptions += -DSYSTEM_DARWIN
+    default.coptions += -fPIC -fvisibility=hidden
+    default.export.libs += -pthread -ldl
+  }
+
+  case 'windows'
+  {
+    default.poptions += -DSYSTEM_WINDOWS
+    if ($cxx.id == 'msvc')
+    {
+      default.poptions += /D_SCL_SECURE_NO_WARNINGS /D_CRT_SECURE_NO_WARNINGS
+      default.coptions += /MP /W4 /wd4251 /wd4592 /wd4127 /Zm200 \
+                          /Gw /GS- /GL /GF
+    }
+  }
+}

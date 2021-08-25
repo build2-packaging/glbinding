@@ -1,5 +1,5 @@
 import libs = glbinding%lib{glbinding}
-import libs += glbinding-aux%lib{glbinding-aux}
+import libs += glbinding%lib{glbinding-aux}
 
 import libs += glfw3%lib{glfw3}
 cxx.poptions += -DGLFW_INCLUDE_NONE

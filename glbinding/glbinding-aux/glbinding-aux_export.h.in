@@ -9,20 +9,20 @@
 #  ifndef GLBINDING_AUX_API
 #    ifdef GLBINDING_AUX_EXPORTS
         /* We are building this library */
-#      define GLBINDING_AUX_API $glbinding_aux.macro.export$
+#      define GLBINDING_AUX_API $project.macro.export$
 #    else
         /* We are using this library */
-#      define GLBINDING_AUX_API $glbinding_aux.macro.import$
+#      define GLBINDING_AUX_API $project.macro.import$
 #    endif
 #  endif
 
 #  ifndef GLBINDING_AUX_NO_EXPORT
-#    define GLBINDING_AUX_NO_EXPORT $glbinding_aux.macro.hidden$
+#    define GLBINDING_AUX_NO_EXPORT $project.macro.hidden$
 #  endif
 #endif
 
 #ifndef GLBINDING_AUX_DEPRECATED
-#  define GLBINDING_AUX_DEPRECATED $glbinding_aux.macro.deprecated$
+#  define GLBINDING_AUX_DEPRECATED $project.macro.deprecated$
 #endif
 
 #ifndef GLBINDING_AUX_DEPRECATED_EXPORT

@@ -1,6 +1,0 @@
-$out_root/
-{
-  include glbinding-aux/
-}
-
-export $out_root/glbinding-aux/$import.target
