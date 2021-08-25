@@ -4,6 +4,7 @@
 !upstream
 !include
 !source
+!data
 
 !*.h
 !*.c
