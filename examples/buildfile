@@ -1,9 +1,3 @@
-import libs = glbinding%lib{glbinding}
-import libs += glbinding%lib{glbinding-aux}
-
-import libs += glfw3%lib{glfw3}
-cxx.poptions += -DGLFW_INCLUDE_NONE
-
 ./: {*/ -build/ -data/}
 
 ./: manifest legal{LICENSE} doc{README.md UPSTREAM.README.md AUTHORS}
