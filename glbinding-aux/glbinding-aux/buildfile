@@ -5,40 +5,26 @@ lib{glbinding-aux}: \
   hxx{glbinding-aux_export glbinding-aux_features glbinding-aux_api} \
   include/glbinding-aux/{hxx ixx}{**} source/{hxx ixx cxx}{**}
 
-switch ($cxx.target.class)
+glbinding_aux.macro.import = '__attribute__((visibility("default")))'
+glbinding_aux.macro.export = '__attribute__((visibility("default")))'
+glbinding_aux.macro.hidden = '__attribute__((visibility("hidden")))'
+glbinding_aux.macro.deprecated = '__attribute__((__deprecated__))'
+
+if ($cxx.target.class == 'windows')
 {
-  case 'linux'
+  if ($cxx.id == 'msvc')
   {
-    glbinding_aux.macro.import = '__attribute__((visibility("default")))'
-    glbinding_aux.macro.export = '__attribute__((visibility("default")))'
-    glbinding_aux.macro.hidden = '__attribute__((visibility("hidden")))'
-    glbinding_aux.macro.deprecated = '__attribute__((__deprecated__))'
+    glbinding_aux.macro.import = '__declspec(dllimport)'
+    glbinding_aux.macro.export = '__declspec(dllexport)'
+    glbinding_aux.macro.hidden = ''
+    glbinding_aux.macro.deprecated = '__declspec(deprecated)'
   }
-
-  case 'macos'
+  else
   {
-    glbinding_aux.macro.import = '__attribute__((visibility("default")))'
-    glbinding_aux.macro.export = '__attribute__((visibility("default")))'
-    glbinding_aux.macro.hidden = '__attribute__((visibility("hidden")))'
+    glbinding_aux.macro.import = ''
+    glbinding_aux.macro.export = ''
+    glbinding_aux.macro.hidden = ''
     glbinding_aux.macro.deprecated = '__attribute__((__deprecated__))'
-  }
-
-  case 'windows'
-  {
-    if ($cxx.id == 'msvc')
-    {
-      glbinding_aux.macro.import = '__declspec(dllimport)'
-      glbinding_aux.macro.export = '__declspec(dllexport)'
-      glbinding_aux.macro.hidden =
-      glbinding_aux.macro.deprecated = '__declspec(deprecated)'
-    }
-    else
-    {
-      glbinding_aux.macro.import =
-      glbinding_aux.macro.export =
-      glbinding_aux.macro.hidden =
-      glbinding_aux.macro.deprecated = '__attribute__((__deprecated__))'
-    }
   }
 }
 
@@ -61,12 +47,11 @@ lib{glbinding-aux}:
   cxx.export.libs = $glbinding
 }
 
-obja{*}: cxx.poptions += -DGLBINDING_AUX_STATIC_BUILD -DGLBINDING_AUX_STATIC_DEFINE
-objs{*}: cxx.poptions += -DGLBINDING_AUX_SHARED_BUILD -DGLBINDING_AUX_EXPORTS
+obja{*}: cxx.poptions += -DGLBINDING_AUX_STATIC_DEFINE
+objs{*}: cxx.poptions += -DGLBINDING_AUX_EXPORTS
 
-liba{glbinding-aux}: \
-  cxx.export.poptions += -DGLBINDING_AUX_STATIC -DGLBINDING_AUX_STATIC_DEFINE
-libs{glbinding-aux}: cxx.export.poptions += -DGLBINDING_AUX_SHARED
+liba{glbinding-aux}: cxx.export.poptions += -DGLBINDING_AUX_STATIC_DEFINE
+# libs{glbinding-aux}: cxx.export.poptions +=
 
 switch ($cxx.target.class)
 {

@@ -13,40 +13,26 @@ hxx{glbinding-version}: in{version} $src_root/manifest
   clean = ($src_root != $out_root)
 }
 
-switch ($cxx.target.class)
+glbinding.macro.import = '__attribute__((visibility("default")))'
+glbinding.macro.export = '__attribute__((visibility("default")))'
+glbinding.macro.hidden = '__attribute__((visibility("hidden")))'
+glbinding.macro.deprecated = '__attribute__((__deprecated__))'
+
+if ($cxx.target.class == 'windows')
 {
-  case 'linux'
+  if ($cxx.id == 'msvc')
   {
-    glbinding.macro.import = '__attribute__((visibility("default")))'
-    glbinding.macro.export = '__attribute__((visibility("default")))'
-    glbinding.macro.hidden = '__attribute__((visibility("hidden")))'
-    glbinding.macro.deprecated = '__attribute__((__deprecated__))'
+    glbinding.macro.import = '__declspec(dllimport)'
+    glbinding.macro.export = '__declspec(dllexport)'
+    glbinding.macro.hidden = ''
+    glbinding.macro.deprecated = '__declspec(deprecated)'
   }
-
-  case 'macos'
+  else
   {
-    glbinding.macro.import = '__attribute__((visibility("default")))'
-    glbinding.macro.export = '__attribute__((visibility("default")))'
-    glbinding.macro.hidden = '__attribute__((visibility("hidden")))'
+    glbinding.macro.import = ''
+    glbinding.macro.export = ''
+    glbinding.macro.hidden = ''
     glbinding.macro.deprecated = '__attribute__((__deprecated__))'
-  }
-
-  case 'windows'
-  {
-    if ($cxx.id == 'msvc')
-    {
-      glbinding.macro.import = '__declspec(dllimport)'
-      glbinding.macro.export = '__declspec(dllexport)'
-      glbinding.macro.hidden =
-      glbinding.macro.deprecated = '__declspec(deprecated)'
-    }
-    else
-    {
-      glbinding.macro.import =
-      glbinding.macro.export =
-      glbinding.macro.hidden =
-      glbinding.macro.deprecated = '__attribute__((__deprecated__))'
-    }
   }
 }
 
@@ -70,7 +56,7 @@ lib{glbinding}:
 }
 
 obja{*}: cxx.poptions += -DGLBINDING_STATIC_DEFINE
-objs{*}: cxx.poptions += -Dglbinding_EXPORTS
+objs{*}: cxx.poptions += -DGLBINDING_EXPORTS
 
 liba{glbinding}: cxx.export.poptions += -DGLBINDING_STATIC_DEFINE
 # libs{glbinding}: cxx.export.poptions +=

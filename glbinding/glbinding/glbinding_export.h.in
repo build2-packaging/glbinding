@@ -7,7 +7,7 @@
 #  define GLBINDING_NO_EXPORT
 #else
 #  ifndef GLBINDING_API
-#    ifdef glbinding_EXPORTS
+#    ifdef GLBINDING_EXPORTS
         /* We are building this library */
 #      define GLBINDING_API $glbinding.macro.export$
 #    else
