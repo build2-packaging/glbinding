@@ -1,2 +1,3 @@
-exe{cubescape-log}: {hxx cxx}{**} $libs \
-  ../cubescape/{hxx cxx}{CubeScape RawFile glutils}
+# It is enough to link with the utility library.
+include ../cubescape/
+exe{cubescape-log}: cxx{main} ../cubescape/libue{cubescape}

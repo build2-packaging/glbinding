@@ -1,1 +1,3 @@
-exe{cubescape}: {hxx cxx}{**} $libs ../data/cubescape/file{*}
+# Utility Library needed by cubescape-log example
+libue{cubescape}: {hxx cxx}{CubeScape RawFile glutils} $libs
+./: exe{cubescape}: cxx{main} libue{cubescape} ../data/cubescape/file{*}
