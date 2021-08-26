@@ -42,36 +42,45 @@ if ($cxx.target.class == 'windows')
 # Build Options
 default.export.poptions =
 default.export.coptions =
+default.export.loptions =
 default.export.libs =
 
 default.poptions =
 default.coptions =
+default.loptions =
 default.libs =
 
 switch ($cxx.target.class)
 {
   case 'linux'
   {
-    default.poptions += -DSYSTEM_LINUX
-    default.coptions += -fPIC -fvisibility=hidden
+    default.export.poptions += -DSYSTEM_LINUX
+    default.coptions += -fPIC -fvisibility=hidden -flto
+    default.loptions += -flto
     default.export.libs += -pthread -ldl
   }
 
   case 'macos'
   {
-    default.poptions += -DSYSTEM_DARWIN
-    default.coptions += -fPIC -fvisibility=hidden
+    default.export.poptions += -DSYSTEM_DARWIN
+    default.coptions += -fPIC -fvisibility=hidden -flto
+    default.loptions += -flto
     default.export.libs += -pthread -ldl
   }
 
   case 'windows'
   {
-    default.poptions += -DSYSTEM_WINDOWS
+    default.export.poptions += -DSYSTEM_WINDOWS
     if ($cxx.id == 'msvc')
     {
       default.poptions += /D_SCL_SECURE_NO_WARNINGS /D_CRT_SECURE_NO_WARNINGS
       default.coptions += /MP /W4 /wd4251 /wd4592 /wd4127 /Zm200 \
                           /Gw /GS- /GL /GF
+    }
+    elif ($cxx.target.system == 'mingw32')
+    {
+      default.coptions += -fvisibility-ms-compat
+      default.loptions += -fPIC
     }
   }
 }

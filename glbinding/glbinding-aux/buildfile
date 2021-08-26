@@ -18,6 +18,7 @@ hxx{glbinding-aux_api}: in{glbinding-aux_msvc_api}: include = ($cxx.id == 'msvc'
 include_dirs = "-I$src_base/include" "-I$out_root" "-I$src_root"
 cxx.poptions += $default.export.poptions $default.poptions $include_dirs
 cxx.coptions += $default.export.coptions $default.coptions
+cxx.loptions += $default.export.loptions $default.loptions
 
 obja{*}: cxx.poptions += -DGLBINDING_AUX_STATIC_DEFINE
 objs{*}: cxx.poptions += -DGLBINDING_AUX_EXPORTS
@@ -27,6 +28,7 @@ lib{glbinding-aux}:
 {
   cxx.export.poptions = $default.export.poptions $include_dirs
   cxx.export.coptions = $default.export.coptions
+  cxx.export.loptions = $default.export.loptions
   cxx.export.libs = $default.export.libs $intf_libs
 }
 

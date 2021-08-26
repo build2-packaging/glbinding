@@ -9,7 +9,10 @@ lib{glbinding}: $intf_libs
 # Source File Dependencies
 lib{glbinding}: \
   hxx{glbinding-version glbinding_export glbinding_features glbinding_api} \
-  include/glbinding/{hxx ixx}{**} source/{hxx ixx cxx}{**}
+  include/glbinding/{hxx ixx}{**} \
+  source/{hxx ixx}{**} source/cxx{** -Binding_pch}
+
+lib{glbinding}: source/cxx{Binding_pch}: include = ($cxx.id == 'msvc')
 
 # Code Generation
 hxx{glbinding-version}: in{version} $src_root/manifest
@@ -27,6 +30,7 @@ hxx{glbinding_api}: in{glbinding_msvc_api}: include = ($cxx.id == 'msvc')
 include_dirs = "-I$src_base/include" "-I$out_root" "-I$src_root"
 cxx.poptions += $default.export.poptions $default.poptions $include_dirs
 cxx.coptions += $default.export.coptions $default.coptions
+cxx.loptions += $default.export.loptions $default.loptions
 
 obja{*}: cxx.poptions += -DGLBINDING_STATIC_DEFINE
 objs{*}: cxx.poptions += -DGLBINDING_EXPORTS
@@ -36,6 +40,7 @@ lib{glbinding}:
 {
   cxx.export.poptions = $default.export.poptions $include_dirs
   cxx.export.coptions = $default.export.coptions
+  cxx.export.loptions = $default.export.loptions
   cxx.export.libs = $default.export.libs $intf_libs
 }
 
