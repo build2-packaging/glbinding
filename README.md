@@ -31,6 +31,7 @@ It defaults to `true` and should be set to `false` if the needed header file is 
 ## Issues
 - GCC [11.0,11.2) may not work due to a bug described [here](https://github.com/build2/build2/issues/158) and [here](https://gcc.gnu.org/bugzilla/show_bug.cgi?id=101298).
 - On Windows, using other compilers than MSVC results in a bunch of undefined references to some symbols when trying to build `glbinding-aux` as DLL. This may be due to a wrong generation of the export header. Building everything as static library still works.
+- On Debian-based systems using Clang, linking may fail due to the missing `LLVMgold.so` library which is needed for LTO.
 
 ## Contributing
 Thanks in advance for your help and contribution to keep this package up-to-date.
