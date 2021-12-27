@@ -24,9 +24,13 @@ To import them in a `buildfile`, one would do the following.
 
 In your `manifest`, you need to add `depends: glbinding`.
 
+`glbinding` needs some standard definitions from the `KHR/khrplatform.h` header file.
+The configuration variable `config.glbinding.use_packaged_khr` of type `bool` can be used to specify if the header file, provided by the package itself, should be used.
+It defaults to `true` and should be set to `false` if the needed header file is already available in the system's include directories.
+
 ## Issues
 - GCC [11.0,11.2) may not work due to a bug described [here](https://github.com/build2/build2/issues/158) and [here](https://gcc.gnu.org/bugzilla/show_bug.cgi?id=101298).
-- On Windows, using other compilers than MSVC results in a bunch of undefined references to some symbols when trying to build `glbinding-aux` as DLL. This may due to a wrong generation of the export header. Building everything as static library still works.
+- On Windows, using other compilers than MSVC results in a bunch of undefined references to some symbols when trying to build `glbinding-aux` as DLL. This may be due to a wrong generation of the export header. Building everything as static library still works.
 
 ## Contributing
 Thanks in advance for your help and contribution to keep this package up-to-date.

@@ -15,6 +15,9 @@ cxx{*}: extension = cpp
 #
 test.target = $cxx.target
 
+# Configuration for setting which KHR header should be used.
+config [bool] config.glbinding.use_packaged_khr ?= true
+
 # Export Macros
 project.macro.import = '__attribute__((visibility("default")))'
 project.macro.export = '__attribute__((visibility("default")))'

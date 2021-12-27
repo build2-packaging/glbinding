@@ -1,8 +1,13 @@
 ./: lib{glbinding}
 
 # Library Dependencies
-include ../external/
-intf_libs = ../external/lib{KHRplatform}
+intf_libs = # Empty
+
+if ($config.glbinding.use_packaged_khr)
+{
+  include ../external/
+  intf_libs += ../external/lib{KHRplatform}
+}
 
 lib{glbinding}: $intf_libs
 

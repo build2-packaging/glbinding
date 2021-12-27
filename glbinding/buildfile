@@ -1,4 +1,4 @@
-./: external/ glbinding/ glbinding-aux/
+./: glbinding/ glbinding-aux/
 
 ./: manifest legal{LICENSE} doc{README.md UPSTREAM.README.md AUTHORS}
 doc{UPSTREAM.README.md}@./: install = doc/README.md
