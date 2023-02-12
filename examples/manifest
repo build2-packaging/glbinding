@@ -1,6 +1,6 @@
 : 1
 name: glbinding-examples
-version: 3.1.0+1
+version: 3.3.0
 project: glbinding
 summary: glbinding is a cross-platform C++ binding for the OpenGL API, generated using the gl.xml specification.
 license: MIT
@@ -15,8 +15,8 @@ email: opensource@cginternals.com
 package-url: https://github.com/build2-packaging/glbinding
 package-email: lyrahgames@mailbox.org
 
-depends: * build2 >= 0.13.0
-depends: * bpkg >= 0.13.0
+depends: * build2 >= 0.15.0
+depends: * bpkg >= 0.15.0
 
 depends: glbinding == $
 
