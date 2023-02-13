@@ -18,6 +18,4 @@ package-email: lyrahgames@mailbox.org
 depends: * build2 >= 0.15.0
 depends: * bpkg >= 0.15.0
 
-depends: glbinding == $
-
-requires: glfw3 ; GLFW
+depends: glfw ^ 3.3.8

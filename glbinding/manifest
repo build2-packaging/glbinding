@@ -15,5 +15,9 @@ email: opensource@cginternals.com
 package-url: https://github.com/build2-packaging/glbinding
 package-email: lyrahgames@mailbox.org
 
+examples: glbinding-examples == $
+examples: glbinding-tools == $
+
 depends: * build2 >= 0.15.0
 depends: * bpkg >= 0.15.0
+
