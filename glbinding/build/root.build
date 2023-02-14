@@ -58,16 +58,16 @@ switch ($cxx.target.class)
   case 'linux'
   {
     default.export.poptions += -DSYSTEM_LINUX
-    default.coptions += -fPIC -fvisibility=hidden -flto
-    default.loptions += -flto
+    default.coptions += -fPIC -fvisibility=hidden #-flto=auto
+    default.loptions += #-flto=auto
     default.export.libs += -pthread -ldl
   }
 
   case 'macos'
   {
     default.export.poptions += -DSYSTEM_DARWIN
-    default.coptions += -fPIC -fvisibility=hidden -flto
-    default.loptions += -flto
+    default.coptions += -fPIC -fvisibility=hidden #-flto
+    default.loptions += #-flto
     default.export.libs += -pthread -ldl
   }
 
