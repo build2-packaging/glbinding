@@ -19,3 +19,8 @@ depends: * build2 >= 0.15.0
 depends: * bpkg >= 0.15.0
 
 depends: glfw ^ 3.3.8
+
+builds: all
+builds: -freebsd ; GLFW does not support FreeBSD
+builds: -emcc ; GLFW does not support Emscripten
+builds: -( +macos &gcc ) ; GLFW does not support GCC on MacOS
