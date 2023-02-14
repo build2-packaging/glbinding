@@ -23,5 +23,5 @@ depends: glfw ^ 3.3.8
 
 builds: all
 builds: -freebsd ; GLFW does not support FreeBSD
-builds: -emcc ; GLFW does not support Emscripten
 builds: -( +macos &gcc ) ; GLFW does not support GCC on MacOS
+build-exclude: **-emcc* ; GLFW does not support Emscripten
