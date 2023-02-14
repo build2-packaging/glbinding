@@ -3,7 +3,7 @@
 </h1>
 
 <p align="center">
-    glbinding is a cross-platform C++ binding for the OpenGL API, generated using the gl.xml specification.
+    <a href="https://glbinding.org/">glbinding</a> is a cross-platform C++ binding for the OpenGL API, generated using the gl.xml specification.
 </p>
 
 <p align="center">
@@ -17,16 +17,32 @@
 
 ## Usage
 Both libraries, `glbinding` and `glbinding-aux`, are provided in the same package `glbinding`.
-To import them in a `buildfile`, one would do the following.
+To import and add them to the variable `libs` in a `buildfile`, one would do the following.
 
-    import glbinding = glbinding%lib{glbinding}
-    import glbinding_aux = glbinding%lib{glbinding-aux}
+    import libs += glbinding%lib{glbinding}
+    import libs += glbinding%lib{glbinding-aux}
 
-In your `manifest`, you need to add `depends: glbinding`.
+In the respective `manifest` file of your project, you would then also need to add the following dependency.
+Feel free to adjust the version constraint.
+
+    depends: glbinding ^ 3.3.0
+
+## Configuration
+
+### Boost.Thread
+
+    config [bool] config.glbinding.use_boost_thread ?= false
+
+For its implementation `glbinding` allows to optionally use Boost's thread library.
+Set the configuration variable to `true` to use `boost::thread` instead of `std::thread` from the C++ STL.
+
+### KHR Headers
+
+    config [bool] config.glbinding.use_packaged_khr ?= true
 
 `glbinding` needs some standard definitions from the `KHR/khrplatform.h` header file.
-The configuration variable `config.glbinding.use_packaged_khr` of type `bool` can be used to specify if the header file, provided by the package itself, should be used.
-It defaults to `true` and should be set to `false` if the needed header file is already available in the system's include directories.
+To be self-contained, it comes with its own version of that header file.
+Set the configuration variable to `false` if `glbinding` should use the KHR headers given by the system.
 
 ## Issues
 - GCC [11.0,11.2) may not work due to a bug described [here](https://github.com/build2/build2/issues/158) and [here](https://gcc.gnu.org/bugzilla/show_bug.cgi?id=101298).

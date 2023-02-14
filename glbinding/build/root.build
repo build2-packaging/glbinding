@@ -1,4 +1,5 @@
 cxx.std = latest
+cxx.internal.scope = current
 
 using cxx
 using in
@@ -15,8 +16,16 @@ cxx{*}: extension = cpp
 #
 test.target = $cxx.target
 
+# Configuration whether to use Boost's thread library.
+config [bool] config.glbinding.use_boost_thread ?= false
 # Configuration for setting which KHR header should be used.
 config [bool] config.glbinding.use_packaged_khr ?= true
+
+# Default Libraries
+default.intf_libs = # Empty
+default.impl_libs = # Empty
+if ($config.glbinding.use_boost_thread)
+  import default.impl_libs += libboost-thread%lib{boost_thread}
 
 # Export Macros
 project.macro.import = '__attribute__((visibility("default")))'
@@ -52,6 +61,9 @@ default.poptions =
 default.coptions =
 default.loptions =
 default.libs =
+
+if ($config.glbinding.use_boost_thread)
+  default.poptions += -DGLBINDING_USE_BOOST_THREAD
 
 switch ($cxx.target.class)
 {

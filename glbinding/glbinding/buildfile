@@ -1,7 +1,7 @@
 ./: lib{glbinding}
 
-# Library Dependencies
-intf_libs = # Empty
+intf_libs = $default.intf_libs
+impl_libs = $default.impl_libs
 
 if ($config.glbinding.use_packaged_khr)
 {
@@ -9,7 +9,9 @@ if ($config.glbinding.use_packaged_khr)
   intf_libs += ../external/lib{KHRplatform}
 }
 
-lib{glbinding}: $intf_libs
+intf_libs = $cxx.deduplicate_export_libs($intf_libs)
+
+lib{glbinding}: $intf_libs $impl_libs
 
 # Source File Dependencies
 lib{glbinding}: \

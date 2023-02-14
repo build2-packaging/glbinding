@@ -1,8 +1,12 @@
 ./: lib{glbinding-aux}
 
 # Library Dependencies
-import intf_libs = lib{glbinding}
-lib{glbinding-aux}: $intf_libs
+intf_libs = $default.intf_libs
+impl_libs = $default.impl_libs
+import intf_libs += lib{glbinding}
+intf_libs = $cxx.deduplicate_export_libs($intf_libs)
+
+lib{glbinding-aux}: $intf_libs $impl_libs
 
 # Sources
 lib{glbinding-aux}: \
