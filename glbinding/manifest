@@ -5,7 +5,8 @@ project: glbinding
 summary: glbinding is a cross-platform C++ binding for the OpenGL API, generated using the gl.xml specification.
 license: MIT
 
-description-file: UPSTREAM.README.md
+description-file: README.md
+#description-file: UPSTREAM.README.md
 
 url: https://glbinding.org/
 src-url: https://github.com/cginternals/glbinding

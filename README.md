@@ -7,6 +7,12 @@
 </p>
 
 <p align="center">
+    <a href="https://glbinding.org/">
+        <img src="https://img.shields.io/website/https/glbinding.org.svg?down_message=offline&label=Official&style=for-the-badge&up_color=blue&up_message=online">
+    </a>
+    <a href="https://github.com/build2-packaging/glbinding">
+        <img src="https://img.shields.io/website/https/github.com/build2-packaging/glbinding.svg?down_message=offline&label=build2&style=for-the-badge&up_color=blue&up_message=online">
+    </a>
     <a href="https://cppget.org/glbinding">
         <img src="https://img.shields.io/website/https/cppget.org/glbinding.svg?down_message=offline&label=cppget.org&style=for-the-badge&up_color=blue&up_message=online">
     </a>
