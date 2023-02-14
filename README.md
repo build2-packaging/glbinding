@@ -51,9 +51,12 @@ To be self-contained, it comes with its own version of that header file.
 Set the configuration variable to `false` if `glbinding` should use the KHR headers given by the system.
 
 ## Issues
+- Since disabling LTO, GCC uses up a lot of memory while compiling.
+- Clang and GCC currently do not work on Windows.
+- LTO cannot be turned on. It should actually be handled by a configuration variable.
 - GCC [11.0,11.2) may not work due to a bug described [here](https://github.com/build2/build2/issues/158) and [here](https://gcc.gnu.org/bugzilla/show_bug.cgi?id=101298).
-- On Windows, using other compilers than MSVC results in a bunch of undefined references to some symbols when trying to build `glbinding-aux` as DLL. This may be due to a wrong generation of the export header. Building everything as static library still works.
-- On Debian-based systems using Clang, linking may fail due to the missing `LLVMgold.so` library which is needed for LTO.
+<!-- - On Windows, using other compilers than MSVC results in a bunch of undefined references to some symbols when trying to build `glbinding-aux` as DLL. This may be due to a wrong generation of the export header. Building everything as static library still works. -->
+<!-- - On Debian-based systems using Clang, linking may fail due to the missing `LLVMgold.so` library which is needed for LTO. -->
 
 ## Contributing
 Thanks in advance for your help and contribution to keep this package up-to-date.
