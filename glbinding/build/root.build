@@ -70,8 +70,8 @@ switch ($cxx.target.class)
   case 'linux'
   {
     default.export.poptions += -DSYSTEM_LINUX
-    default.coptions += -fPIC -fvisibility=hidden #-flto=auto
-    default.loptions += #-flto=auto
+    default.coptions += -fPIC -fvisibility=hidden -flto=auto
+    default.loptions += -flto=auto
     default.export.libs += -pthread -ldl
   }
 
