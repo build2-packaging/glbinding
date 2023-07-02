@@ -20,7 +20,7 @@ depends: * bpkg >= 0.15.0
 
 depends: glfw ^ 3.3.8
 
-builds: all
+builds: default
 builds: -freebsd ; GLFW does not support FreeBSD
 builds: -( +macos &gcc ) ; GLFW does not support GCC on MacOS
 build-exclude: **-emcc* ; GLFW does not support Emscripten
