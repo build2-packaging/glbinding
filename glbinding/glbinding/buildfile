@@ -1,5 +1,7 @@
 ./: lib{glbinding}
 
+# Library Dependencies
+#
 intf_libs = $default.intf_libs
 impl_libs = $default.impl_libs
 
@@ -14,14 +16,16 @@ intf_libs = $cxx.deduplicate_export_libs($intf_libs)
 lib{glbinding}: $intf_libs $impl_libs
 
 # Source File Dependencies
+#
 lib{glbinding}: \
-  hxx{glbinding-version glbinding_export glbinding_features glbinding_api} \
+  hxx{glbinding-version glbinding_features glbinding_api} \
   include/glbinding/{hxx ixx}{**} \
   source/{hxx ixx}{**} source/cxx{** -Binding_pch}
 
 lib{glbinding}: source/cxx{Binding_pch}: include = ($cxx.id == 'msvc')
 
 # Code Generation
+#
 hxx{glbinding-version}: in{version} $src_root/manifest
 {
   summary = $project.summary
@@ -29,20 +33,22 @@ hxx{glbinding-version}: in{version} $src_root/manifest
   dist = true
   clean = ($src_root != $out_root)
 }
-hxx{glbinding_export}: in{glbinding_export}
-hxx{glbinding_api}: in{glbinding_api}: include = ($cxx.id != 'msvc')
-hxx{glbinding_api}: in{glbinding_msvc_api}: include = ($cxx.id == 'msvc')
+# hxx{glbinding_export}: in{glbinding_export}
+# hxx{glbinding_api}: in{glbinding_api}: include = ($cxx.id != 'msvc')
+# hxx{glbinding_api}: in{glbinding_msvc_api}: include = ($cxx.id == 'msvc')
 
 # Build Options
 include_dirs = "-I$src_base/include" "-I$out_root" "-I$src_root"
 cxx.poptions += $default.export.poptions $default.poptions $include_dirs
 cxx.coptions += $default.export.coptions $default.coptions
 cxx.loptions += $default.export.loptions $default.loptions
+cxx.aoptions += $default.export.aoptions $default.aoptions
 
-obja{*}: cxx.poptions += -DGLBINDING_STATIC_DEFINE
-objs{*}: cxx.poptions += -DGLBINDING_EXPORTS
+{hbmia obja}{*}: cxx.poptions += -DGLBINDING_STATIC_BUILD
+{hbmis objs}{*}: cxx.poptions += -DGLBINDING_SHARED_BUILD
 
 # Export Options
+#
 lib{glbinding}:
 {
   cxx.export.poptions = $default.export.poptions $include_dirs
@@ -51,10 +57,15 @@ lib{glbinding}:
   cxx.export.libs = $default.export.libs $intf_libs
 }
 
-liba{glbinding}: cxx.export.poptions += -DGLBINDING_STATIC_DEFINE
-# libs{glbinding}: cxx.export.poptions +=
+liba{glbinding}: cxx.export.poptions += -DGLBINDING_STATIC
+libs{glbinding}: cxx.export.poptions += -DGLBINDING_SHARED
+
+# Library Version
+#
+lib{glbinding}: bin.lib.version = "-$version.major.$version.minor"
 
 # Installation of Header Files
+#
 hxx{*}: install = include/glbinding/
 source/{hxx ixx}{*}: install = false
 include/{hxx ixx}{*}:

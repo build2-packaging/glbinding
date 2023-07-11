@@ -10,24 +10,27 @@ lib{glbinding-aux}: $intf_libs $impl_libs
 
 # Sources
 lib{glbinding-aux}: \
-  hxx{glbinding-aux_export glbinding-aux_features glbinding-aux_api} \
+  hxx{glbinding-aux_features glbinding-aux_api} \
   include/glbinding-aux/{hxx ixx}{**} source/{hxx ixx cxx}{**}
 
 # Code Generation
-hxx{glbinding-aux_export}: in{glbinding-aux_export}
-hxx{glbinding-aux_api}: in{glbinding-aux_api}: include = ($cxx.id != 'msvc')
-hxx{glbinding-aux_api}: in{glbinding-aux_msvc_api}: include = ($cxx.id == 'msvc')
+# hxx{glbinding-aux_export}: in{glbinding-aux_export}
+# hxx{glbinding-aux_api}: in{glbinding-aux_api}: include = ($cxx.id != 'msvc')
+# hxx{glbinding-aux_api}: in{glbinding-aux_msvc_api}: include = ($cxx.id == 'msvc')
 
 # Build Options
+#
 include_dirs = "-I$src_base/include" "-I$out_root" "-I$src_root"
 cxx.poptions += $default.export.poptions $default.poptions $include_dirs
 cxx.coptions += $default.export.coptions $default.coptions
 cxx.loptions += $default.export.loptions $default.loptions
+cxx.aoptions += $default.export.aoptions $default.aoptions
 
-obja{*}: cxx.poptions += -DGLBINDING_AUX_STATIC_DEFINE
-objs{*}: cxx.poptions += -DGLBINDING_AUX_EXPORTS
+{hbmia obja}{*}: cxx.poptions += -DGLBINDING_AUX_STATIC_BUILD
+{hbmis objs}{*}: cxx.poptions += -DGLBINDING_AUX_SHARED_BUILD
 
 # Export Options
+#
 lib{glbinding-aux}:
 {
   cxx.export.poptions = $default.export.poptions $include_dirs
@@ -36,10 +39,15 @@ lib{glbinding-aux}:
   cxx.export.libs = $default.export.libs $intf_libs
 }
 
-liba{glbinding-aux}: cxx.export.poptions += -DGLBINDING_AUX_STATIC_DEFINE
-# libs{glbinding-aux}: cxx.export.poptions +=
+liba{glbinding-aux}: cxx.export.poptions += -DGLBINDING_AUX_STATIC
+libs{glbinding-aux}: cxx.export.poptions += -DGLBINDING_AUX_SHARED
+
+# Library Version
+#
+lib{glbinding-aux}: bin.lib.version = "-$version.major.$version.minor"
 
 # Installation of Header Files
+#
 hxx{*}: install = include/glbinding-aux/
 source/{hxx ixx}{*}: install = false
 include/{hxx ixx}{*}:

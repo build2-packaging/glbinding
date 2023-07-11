@@ -1,5 +1,6 @@
 cxx.std = latest
-cxx.internal.scope = current
+
+# cxx.internal.scope = current
 
 using cxx
 using in
@@ -17,49 +18,55 @@ cxx{*}: extension = cpp
 test.target = $cxx.target
 
 # Configuration whether to use Boost's thread library.
+#
 config [bool] config.glbinding.use_boost_thread ?= false
+
 # Configuration for setting which KHR header should be used.
+#
 config [bool] config.glbinding.use_packaged_khr ?= true
 
 # Default Libraries
+#
 default.intf_libs = # Empty
 default.impl_libs = # Empty
 if ($config.glbinding.use_boost_thread)
   import default.impl_libs += libboost-thread%lib{boost_thread}
 
 # Export Macros
-project.macro.import = '__attribute__((visibility("default")))'
-project.macro.export = '__attribute__((visibility("default")))'
-project.macro.hidden = '__attribute__((visibility("hidden")))'
-project.macro.deprecated = '__attribute__((__deprecated__))'
+# project.macro.import = '__attribute__((visibility("default")))'
+# project.macro.export = '__attribute__((visibility("default")))'
+# project.macro.hidden = '__attribute__((visibility("hidden")))'
+# project.macro.deprecated = '__attribute__((__deprecated__))'
 
-if ($cxx.target.class == 'windows')
-{
-  if ($cxx.id == 'msvc')
-  {
-    project.macro.import = '__declspec(dllimport)'
-    project.macro.export = '__declspec(dllexport)'
-    project.macro.hidden = ''
-    project.macro.deprecated = '__declspec(deprecated)'
-  }
-  else
-  {
-    project.macro.import = ''
-    project.macro.export = ''
-    project.macro.hidden = ''
-    project.macro.deprecated = '__attribute__((__deprecated__))'
-  }
-}
+# if ($cxx.target.class == 'windows')
+# {
+#   if ($cxx.id == 'msvc')
+#   {
+#     project.macro.import = '__declspec(dllimport)'
+#     project.macro.export = '__declspec(dllexport)'
+#     project.macro.hidden = ''
+#     project.macro.deprecated = '__declspec(deprecated)'
+#   }
+#   else
+#   {
+#     project.macro.import = ''
+#     project.macro.export = ''
+#     project.macro.hidden = ''
+#     project.macro.deprecated = '__attribute__((__deprecated__))'
+#   }
+# }
 
 # Build Options
 default.export.poptions =
 default.export.coptions =
 default.export.loptions =
+default.export.aoptions =
 default.export.libs =
 
 default.poptions =
 default.coptions =
 default.loptions =
+default.aoptions =
 default.libs =
 
 if ($config.glbinding.use_boost_thread)
@@ -70,15 +77,16 @@ switch ($cxx.target.class)
   case 'linux'
   {
     default.export.poptions += -DSYSTEM_LINUX
-    default.coptions += -fPIC -fvisibility=hidden -flto=auto
-    default.loptions += -flto=auto
+    default.coptions += #-fPIC -fvisibility=hidden -flto=auto
+    default.loptions += #-fPIC -fvisibility=hidden -flto=auto
+    default.aoptions += #-flto=auto
     default.export.libs += -pthread -ldl
   }
 
   case 'macos'
   {
     default.export.poptions += -DSYSTEM_DARWIN
-    default.coptions += -fPIC -fvisibility=hidden #-flto
+    default.coptions += #-fPIC -fvisibility=hidden #-flto
     default.loptions += #-flto
     default.export.libs += -pthread -ldl
   }
@@ -94,8 +102,8 @@ switch ($cxx.target.class)
     }
     elif ($cxx.target.system == 'mingw32')
     {
-      default.coptions += -fvisibility-ms-compat
-      default.loptions += -fPIC
+      default.coptions += #-fvisibility-ms-compat
+      default.loptions += #-fPIC
     }
   }
 }
