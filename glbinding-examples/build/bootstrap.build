@@ -3,5 +3,6 @@ project = glbinding-examples
 using version
 using config
 using test
-using install
 using dist
+
+# using install
