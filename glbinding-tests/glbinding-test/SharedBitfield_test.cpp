@@ -1,0 +1,1 @@
+../../upstream/source/tests/glbinding-test/SharedBitfield_test.cpp

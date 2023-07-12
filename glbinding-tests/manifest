@@ -1,10 +1,10 @@
 : 1
-name: glbinding
+name: glbinding-tests
 version: 3.3.0
-type: lib
+type: exe
 language: c++
 project: glbinding
-summary: glbinding is a cross-platform C++ binding for the OpenGL API, generated using the gl.xml specification.
+summary: Tests for glbinding
 license: MIT
 
 description-file: README.md
@@ -18,13 +18,14 @@ package-description-file: PACKAGE-README.md
 package-url: https://github.com/build2-packaging/glbinding
 package-email: packaging@build2.org
 
-tests: glbinding-tests == $
-tests: glbinding-tools == $
-examples: glbinding-examples == $
-
 depends: * build2 >= 0.16.0
 depends: * bpkg >= 0.16.0
 
-depends: libboost-thread ^ 1.78.0 ? ($config.glbinding.use_boost_thread)
+depends: glfw ^ 3.3.8
+depends: gtest ^ 1.11.0
+depends: gmock ^ 1.11.0
 
-boost-thread-build-config: config.glbinding.use_boost_thread=true
+builds: default
+builds: -freebsd ; GLFW does not support FreeBSD
+builds: -( +macos &gcc ) ; GLFW does not support GCC on MacOS
+build-exclude: **-emcc* ; GLFW does not support Emscripten

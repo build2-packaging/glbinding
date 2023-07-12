@@ -1,0 +1,10 @@
+project = glbinding-tests
+
+using version
+using config
+using test
+using dist
+
+# Do not install the tests.
+#
+# using install

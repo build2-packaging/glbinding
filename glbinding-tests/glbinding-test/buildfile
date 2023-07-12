@@ -1,0 +1,12 @@
+import libs = glbinding%lib{glbinding}
+import libs += glbinding%lib{glbinding-aux}
+
+import libs += glfw%lib{glfw}
+cxx.poptions += -DGLFW_INCLUDE_NONE
+
+import libs += gtest%lib{gtest}
+import libs += gmock%lib{gmock}
+
+cxx.poptions += -DBUILD_GPU_TESTS
+
+exe{glbinding-test}: cxx{* -Multi*} $libs
