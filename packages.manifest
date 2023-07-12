@@ -1,6 +1,6 @@
 : 1
 location: glbinding/
 :
-location: examples/
+location: glbinding-examples/
 :
-location: tools/
+location: glbinding-tools/
