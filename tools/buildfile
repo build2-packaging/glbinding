@@ -1,5 +1,1 @@
-./: {*/ -build/}
-
-./: manifest legal{LICENSE} doc{README.md UPSTREAM.README.md AUTHORS}
-doc{UPSTREAM.README.md}@./: install = doc/README.md
-doc{README.md}@./: install = doc/PACKAGE.README.md
+./: {*/ -build/} manifest legal{LICENSE} doc{*.md AUTHORS}

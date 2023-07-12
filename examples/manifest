@@ -1,19 +1,22 @@
 : 1
 name: glbinding-examples
 version: 3.3.0
+type: exe
+language: c++
 project: glbinding
-summary: glbinding is a cross-platform C++ binding for the OpenGL API, generated using the gl.xml specification.
+summary: Examples for glbinding
 license: MIT
 
-description-file: UPSTREAM.README.md
+description-file: README.md
 
 url: https://glbinding.org/
 src-url: https://github.com/cginternals/glbinding
 doc-url: https://glbinding.org/docs.html
 email: opensource@cginternals.com
 
+package-description-file: PACKAGE-README.md
 package-url: https://github.com/build2-packaging/glbinding
-package-email: lyrahgames@mailbox.org
+package-email: packaging@build2.org
 
 depends: * build2 >= 0.16.0
 depends: * bpkg >= 0.16.0
