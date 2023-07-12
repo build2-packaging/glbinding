@@ -27,4 +27,6 @@ depends: * bpkg >= 0.16.0
 
 depends: libboost-thread ^ 1.78.0 ? ($config.glbinding.use_boost_thread)
 
+builds: default : -bindist ; Binary distributions don't need to be tested.
+
 boost-thread-build-config: config.glbinding.use_boost_thread=true
