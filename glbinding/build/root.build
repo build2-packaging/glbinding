@@ -30,7 +30,7 @@ config [bool] config.glbinding.use_packaged_khr ?= true
 default.intf_libs = # Empty
 default.impl_libs = # Empty
 if ($config.glbinding.use_boost_thread)
-  import default.impl_libs += libboost-thread%lib{boost_thread}
+  import default.intf_libs += libboost-thread%lib{boost_thread}
 
 # Export Macros
 # project.macro.import = '__attribute__((visibility("default")))'
