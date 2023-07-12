@@ -19,7 +19,7 @@ package-email: lyrahgames@mailbox.org
 examples: glbinding-examples == $
 examples: glbinding-tools == $
 
-depends: * build2 >= 0.15.0
-depends: * bpkg >= 0.15.0
+depends: * build2 >= 0.16.0
+depends: * bpkg >= 0.16.0
 
 depends: libboost-thread ^ 1.78.0 ? ($config.glbinding.use_boost_thread)
