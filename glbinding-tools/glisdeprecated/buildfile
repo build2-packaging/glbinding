@@ -1,1 +1,4 @@
 exe{glisdeprecated}: {hxx cxx}{*} $libs
+{
+  test = false
+}

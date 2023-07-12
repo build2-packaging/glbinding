@@ -18,8 +18,8 @@ package-description-file: PACKAGE-README.md
 package-url: https://github.com/build2-packaging/glbinding
 package-email: packaging@build2.org
 
+tests: glbinding-tools == $
 examples: glbinding-examples == $
-examples: glbinding-tools == $
 
 depends: * build2 >= 0.16.0
 depends: * bpkg >= 0.16.0
