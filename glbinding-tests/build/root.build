@@ -15,3 +15,5 @@ cxx{*}: extension = cpp
 test.target = $cxx.target
 
 exe{*}: test = true
+
+config [bool] config.glbinding_tests.use_glfw_window ?= false
