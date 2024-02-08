@@ -15,6 +15,11 @@ cxx{*}: extension = cpp
 #
 test.target = $cxx.target
 
+# This config variable decides whether to run and test
+# executables that require a valid OpenGL context to succeed.
+# It should be disabled for target configurations
+# in CI runs that do not support GUI mocking.
+#
 config [bool] config.glbinding_tools.opengl_context_testing ?= true
 
 # The tool executables will try to create a valid
@@ -26,6 +31,5 @@ exe{*}: test = $config.glbinding_tools.opengl_context_testing
 #
 import libs = glbinding%lib{glbinding}
 import libs += glbinding%lib{glbinding-aux}
-
 import libs += glfw%lib{glfw}
 cxx.poptions += -DGLFW_INCLUDE_NONE

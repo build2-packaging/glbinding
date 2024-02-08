@@ -1,14 +1,26 @@
+# Library Dependencies
+#
 import libs = glbinding%lib{glbinding}
 import libs += glbinding%lib{glbinding-aux}
-
 import libs += glfw%lib{glfw}
-
 import libs += gtest%lib{gtest}
 import libs += gmock%lib{gmock}
 
+# Add the framework and all basic unit tests.
+#
 exe{glbinding-test}: cxx{* -Multi* -Regression_test_1*}
+
+# Include unit tests that require a valid OpenGL context
+# only when OpenGL context testing is enabled.
+#
 exe{glbinding-test}: cxx{Regression_test_1*}: include = $config.glbinding_tests.opengl_context_testing
 
+# Order Important:
+# The library prerequisites need to be provided after the sources.
+# Otherwise, linker errors 'undefined reference' might occur.
+#
 exe{glbinding-test}: $libs
 
+# The tests require this macro.
+#
 cxx.poptions += -DBUILD_GPU_TESTS

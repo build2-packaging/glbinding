@@ -16,6 +16,9 @@ test.target = $cxx.target
 
 exe{*}: test = true
 
-#
+# This config variable decides whether to link regression tests
+# that require a valid OpenGL context to succeed.
+# It should be disabled for target configurations
+# in CI runs that do not support GUI mocking.
 #
 config [bool] config.glbinding_tests.opengl_context_testing ?= true

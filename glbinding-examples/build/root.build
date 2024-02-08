@@ -16,8 +16,8 @@ cxx{*}: extension = cpp
 test.target = $cxx.target
 
 # Default Library Dependencies
+#
 import libs = glbinding%lib{glbinding}
 import libs += glbinding%lib{glbinding-aux}
-
 import libs += glfw%lib{glfw}
 cxx.poptions += -DGLFW_INCLUDE_NONE

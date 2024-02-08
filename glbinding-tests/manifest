@@ -27,6 +27,8 @@ depends: glfw ^ 3.3.8
 depends: gtest ^ 1.11.0
 depends: gmock ^ 1.11.0
 
+# Default Builds and Configuration
+#
 builds: default
 builds: -bindist ; glbinding does not support bindist configs.
 builds: -freebsd ; GLFW does not support FreeBSD.
@@ -34,5 +36,7 @@ builds: -( +macos &gcc ) ; GLFW does not support GCC on MacOS.
 build-exclude: **-emcc* ; GLFW does not support Emscripten.
 default-build-config: config.glbinding_tests.opengl_context_testing=false
 
-opengl-context-builds: &linux ; So far only Linux-based configs support GUI mocking.
+# Builds and Configuration for OpenGL Context Testing
+#
+opengl-context-builds: default : &( +linux -bindist ) ; So far only these target configurations support GUI mocking.
 opengl-context-build-config: config.glbinding_tests.opengl_context_testing=true

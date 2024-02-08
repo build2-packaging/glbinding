@@ -26,6 +26,8 @@ depends: glbinding == $
 depends: glew ^ 2.2.0
 depends: glfw ^ 3.3.8
 
+# Default Builds and Configuration
+#
 builds: default
 builds: -bindist ; glbinding does not support bindist configs.
 builds: -freebsd ; GLFW does not support FreeBSD
