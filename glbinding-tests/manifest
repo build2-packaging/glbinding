@@ -30,5 +30,5 @@ builds: -freebsd ; GLFW does not support FreeBSD.
 builds: -( +macos &gcc ) ; GLFW does not support GCC on MacOS.
 build-exclude: **-emcc* ; GLFW does not support Emscripten.
 
-glfw-window-builds: linux : &default ; For now, only Linux machines in default class support GUI mocking.
-glfw-window-build-config: config.glbinding_tests.use_glfw_window=true ; Enable the construction and testing of GLFW windows.
+default-build-config: config.glbinding_tests.use_glfw_window=false
+opengl-context-build-config: config.glbinding_tests.use_glfw_window=true ; Enable the construction and testing of GLFW windows.

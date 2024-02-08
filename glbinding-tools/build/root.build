@@ -15,7 +15,14 @@ cxx{*}: extension = cpp
 #
 test.target = $cxx.target
 
-exe{*}: test = true
+# The tool executables will try to create a valid
+# OpenGL context and fail if this might not be possible.
+# Using build2's CI service, only a few machines allow this.
+# As such, it will be disabled for others.
+#
+config [bool] config.glbinding_tools.opengl_context_testing ?= true
+#
+exe{*}: test = $config.glbinding_tools.opengl_context_testing
 
 # Default Library Dependencies
 #
