@@ -27,6 +27,7 @@ depends: glew ^ 2.2.0
 depends: glfw ^ 3.3.8
 
 builds: default
+builds: -bindist ; glbinding does not support bindist configs.
 builds: -freebsd ; GLFW does not support FreeBSD
 builds: -( +macos &gcc ) ; GLFW does not support GCC on MacOS
 build-exclude: **-emcc* ; GLFW does not support Emscripten
