@@ -8,16 +8,32 @@
 [![queue.cppget.org](https://img.shields.io/website/https/queue.cppget.org/glbinding.svg?down_message=empty&down_color=blue&label=queue.cppget.org&style=for-the-badge&up_color=orange&up_message=running)](https://queue.cppget.org/glbinding)
 
 ## Usage
+Make sure to add the stable section of the `cppget.org` repository to your project's `repositories.manifest` to be able to fetch this package.
+
+    :
+    role: prerequisite
+    location: https://pkg.cppget.org/1/stable
+    # trust: ...
+
+If the stable section of `cppget.org` is not an option then add this Git repository itself instead as a prerequisite.
+
+    :
+    role: prerequisite
+    location: https://github.com/build2-packaging/glbinding.git
+
+Add the dependency in your project's `manifest` file to make the package available for import.
+
+    depends: glbinding ^3.3.0
+
 Both libraries, `glbinding` and `glbinding-aux`, are provided in the same package `glbinding`.
 To import and add them to the variable `libs` in a `buildfile`, one would do the following.
 
     import libs += glbinding%lib{glbinding}
     import libs += glbinding%lib{glbinding-aux}
 
-In the respective `manifest` file of your project, you would then also need to add the following dependency.
-Feel free to adjust the version constraint.
-
-    depends: glbinding ^ 3.3.0
+Additionally, this repository also contains the `glbinding-tests`, `glbinding-examples`, and `glbinding-tools` packages that contain executables for learning and testing.
+These had to be provided as standalone packages to allow for custom configurations during CI runs.
+Additionally, `glbinding-tools` is also installable.
 
 ## Configuration
 
@@ -36,13 +52,19 @@ Set the configuration variable to `true` to use `boost::thread` instead of `std:
 To be self-contained, it comes with its own version of that header file.
 Set the configuration variable to `false` if `glbinding` should use the KHR headers given by the system.
 
+### OpenGL Context Testing for Tests and Tools
+
+    config [bool] config.glbinding_tests.opengl_context_testing ?= true
+    config [bool] config.glbinding_tools.opengl_context_testing ?= true
+
+These config variable decide whether to link regression tests or run executables that require a valid OpenGL context to succeed.
+As tests and tools will likely to be used on targets where OpenGL drawing is required, these variables are enabled by default.
+However, they should be disabled for target configurations in CI runs that do not support GUI mocking.
+
 ## Issues
-- Since disabling LTO, GCC uses up a lot of memory while compiling.
-- Clang and GCC currently do not work on Windows.
-- LTO cannot be turned on. It should actually be handled by a configuration variable.
-- GCC [11.0,11.2) may not work due to a bug described [here](https://github.com/build2/build2/issues/158) and [here](https://gcc.gnu.org/bugzilla/show_bug.cgi?id=101298).
-<!-- - On Windows, using other compilers than MSVC results in a bunch of undefined references to some symbols when trying to build `glbinding-aux` as DLL. This may be due to a wrong generation of the export header. Building everything as static library still works. -->
-<!-- - On Debian-based systems using Clang, linking may fail due to the missing `LLVMgold.so` library which is needed for LTO. -->
+- Compilation might abort due to insufficient memory as it may use up all available RAM. For this case, re-run the compilation process multiple times until no errors occur or use less threads for build2 `b -j 1 ...`.
+- The examples fail on a few MinGW-based Windows configurations due to strange undefined references.
+- Warnings are generated on Windows that show that redeclarations without dllimport attribute occur. It does not seem to be an actual problem but should be dealt with in the future.
 
 ## Contributing
 Thanks in advance for your help and contribution to keep this package up-to-date.

@@ -1,7 +1,6 @@
 cxx.std = latest
 
 using cxx
-using in
 
 hxx{*}: extension = h
 ixx{*}: extension = inl
