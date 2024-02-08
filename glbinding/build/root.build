@@ -25,69 +25,33 @@ config [bool] config.glbinding.use_boost_thread ?= false
 #
 config [bool] config.glbinding.use_packaged_khr ?= true
 
-# Default Libraries
+# Default Variables for Building and Exportation
 #
 default.intf_libs = # Empty
 default.impl_libs = # Empty
+#
+default.export.poptions = # Empty
+default.export.libs = # Empty
+
+# Use Boost.Thread if configured.
+#
 if ($config.glbinding.use_boost_thread)
-  import default.intf_libs += libboost-thread%lib{boost_thread}
-
-# Export Macros
-# project.macro.import = '__attribute__((visibility("default")))'
-# project.macro.export = '__attribute__((visibility("default")))'
-# project.macro.hidden = '__attribute__((visibility("hidden")))'
-# project.macro.deprecated = '__attribute__((__deprecated__))'
-
-# if ($cxx.target.class == 'windows')
-# {
-#   if ($cxx.id == 'msvc')
-#   {
-#     project.macro.import = '__declspec(dllimport)'
-#     project.macro.export = '__declspec(dllexport)'
-#     project.macro.hidden = ''
-#     project.macro.deprecated = '__declspec(deprecated)'
-#   }
-#   else
-#   {
-#     project.macro.import = ''
-#     project.macro.export = ''
-#     project.macro.hidden = ''
-#     project.macro.deprecated = '__attribute__((__deprecated__))'
-#   }
-# }
-
-# Build Options
-default.export.poptions =
-default.export.coptions =
-default.export.loptions =
-default.export.aoptions =
-default.export.libs =
-
-default.poptions =
-default.coptions =
-default.loptions =
-default.aoptions =
-default.libs =
-
-if ($config.glbinding.use_boost_thread)
-  default.poptions += -DGLBINDING_USE_BOOST_THREAD
+{
+  import default.impl_libs += libboost-thread%lib{boost_thread}
+  cxx.poptions += -DGLBINDING_USE_BOOST_THREAD
+}
 
 switch ($cxx.target.class)
 {
   case 'linux'
   {
     default.export.poptions += -DSYSTEM_LINUX
-    default.coptions += #-fPIC -fvisibility=hidden -flto=auto
-    default.loptions += #-fPIC -fvisibility=hidden -flto=auto
-    default.aoptions += #-flto=auto
     default.export.libs += -pthread -ldl
   }
 
   case 'macos'
   {
     default.export.poptions += -DSYSTEM_DARWIN
-    default.coptions += #-fPIC -fvisibility=hidden #-flto
-    default.loptions += #-flto
     default.export.libs += -pthread -ldl
   }
 
@@ -96,14 +60,16 @@ switch ($cxx.target.class)
     default.export.poptions += -DSYSTEM_WINDOWS
     if ($cxx.id == 'msvc')
     {
-      default.poptions += /D_SCL_SECURE_NO_WARNINGS /D_CRT_SECURE_NO_WARNINGS
-      default.coptions += /MP /W4 /wd4251 /wd4592 /wd4127 /Zm200 \
-                          /Gw /GS- /GL /GF
+      cxx.poptions += /D_SCL_SECURE_NO_WARNINGS /D_CRT_SECURE_NO_WARNINGS
+      cxx.coptions += /MP /W4 /wd4251 /wd4592 /wd4127 /Zm200 /Gw /GS- /GL /GF
     }
     elif ($cxx.target.system == 'mingw32')
     {
-      default.coptions += #-fvisibility-ms-compat
-      default.loptions += #-fPIC
+      # cxx.coptions +=
+      # cxx.loptions +=
     }
   }
 }
+
+cxx.poptions =+ $default.export.poptions
+cxx.libs += $default.export.libs

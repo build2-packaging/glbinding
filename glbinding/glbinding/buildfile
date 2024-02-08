@@ -13,8 +13,6 @@ if ($config.glbinding.use_packaged_khr)
 
 intf_libs = $cxx.deduplicate_export_libs($intf_libs)
 
-lib{glbinding}: $intf_libs $impl_libs
-
 # Source File Dependencies
 #
 lib{glbinding}: \
@@ -33,17 +31,17 @@ hxx{glbinding-version}: in{version} $src_root/manifest
   dist = true
   clean = ($src_root != $out_root)
 }
-# hxx{glbinding_export}: in{glbinding_export}
-# hxx{glbinding_api}: in{glbinding_api}: include = ($cxx.id != 'msvc')
-# hxx{glbinding_api}: in{glbinding_msvc_api}: include = ($cxx.id == 'msvc')
+
+# Add libraries at the end. Order is important.
+# Otherwise, linking might fail due to 'undefined reference' errors.
+#
+lib{glbinding}: $intf_libs $impl_libs
 
 # Build Options
+#
 include_dirs = "-I$src_base/include" "-I$out_root" "-I$src_root"
-cxx.poptions += $default.export.poptions $default.poptions $include_dirs
-cxx.coptions += $default.export.coptions $default.coptions
-cxx.loptions += $default.export.loptions $default.loptions
-cxx.aoptions += $default.export.aoptions $default.aoptions
-
+cxx.poptions += $include_dirs
+#
 {hbmia obja}{*}: cxx.poptions += -DGLBINDING_STATIC_BUILD
 {hbmis objs}{*}: cxx.poptions += -DGLBINDING_SHARED_BUILD
 
@@ -52,11 +50,9 @@ cxx.aoptions += $default.export.aoptions $default.aoptions
 lib{glbinding}:
 {
   cxx.export.poptions = $default.export.poptions $include_dirs
-  cxx.export.coptions = $default.export.coptions
-  cxx.export.loptions = $default.export.loptions
   cxx.export.libs = $default.export.libs $intf_libs
 }
-
+#
 liba{glbinding}: cxx.export.poptions += -DGLBINDING_STATIC
 libs{glbinding}: cxx.export.poptions += -DGLBINDING_SHARED
 

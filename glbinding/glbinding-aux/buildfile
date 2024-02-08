@@ -1,31 +1,28 @@
 ./: lib{glbinding-aux}
 
 # Library Dependencies
+#
 intf_libs = $default.intf_libs
 impl_libs = $default.impl_libs
 import intf_libs += lib{glbinding}
 intf_libs = $cxx.deduplicate_export_libs($intf_libs)
 
-lib{glbinding-aux}: $intf_libs $impl_libs
-
-# Sources
+# Source Dependencies
+#
 lib{glbinding-aux}: \
   hxx{glbinding-aux_features glbinding-aux_api} \
   include/glbinding-aux/{hxx ixx}{**} source/{hxx ixx cxx}{**}
 
-# Code Generation
-# hxx{glbinding-aux_export}: in{glbinding-aux_export}
-# hxx{glbinding-aux_api}: in{glbinding-aux_api}: include = ($cxx.id != 'msvc')
-# hxx{glbinding-aux_api}: in{glbinding-aux_msvc_api}: include = ($cxx.id == 'msvc')
+# Add libraries at the end. Order is important.
+# Otherwise, linking might fail due to 'undefined reference' errors.
+#
+lib{glbinding-aux}: $intf_libs $impl_libs
 
 # Build Options
 #
 include_dirs = "-I$src_base/include" "-I$out_root" "-I$src_root"
-cxx.poptions += $default.export.poptions $default.poptions $include_dirs
-cxx.coptions += $default.export.coptions $default.coptions
-cxx.loptions += $default.export.loptions $default.loptions
-cxx.aoptions += $default.export.aoptions $default.aoptions
-
+cxx.poptions += $include_dirs
+#
 {hbmia obja}{*}: cxx.poptions += -DGLBINDING_AUX_STATIC_BUILD
 {hbmis objs}{*}: cxx.poptions += -DGLBINDING_AUX_SHARED_BUILD
 
@@ -34,11 +31,9 @@ cxx.aoptions += $default.export.aoptions $default.aoptions
 lib{glbinding-aux}:
 {
   cxx.export.poptions = $default.export.poptions $include_dirs
-  cxx.export.coptions = $default.export.coptions
-  cxx.export.loptions = $default.export.loptions
   cxx.export.libs = $default.export.libs $intf_libs
 }
-
+#
 liba{glbinding-aux}: cxx.export.poptions += -DGLBINDING_AUX_STATIC
 libs{glbinding-aux}: cxx.export.poptions += -DGLBINDING_AUX_SHARED
 
