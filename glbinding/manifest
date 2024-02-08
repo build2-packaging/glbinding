@@ -4,7 +4,7 @@ version: 3.3.0
 type: lib
 language: c++
 project: glbinding
-summary: glbinding is a cross-platform C++ binding for the OpenGL API, generated using the gl.xml specification.
+summary: OpenGL loader C++ library based on gl.xml specification
 license: MIT
 
 description-file: README.md
