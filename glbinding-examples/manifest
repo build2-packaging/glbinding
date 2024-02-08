@@ -21,6 +21,8 @@ package-email: packaging@build2.org
 depends: * build2 >= 0.16.0
 depends: * bpkg >= 0.16.0
 
+depends: glbinding == $
+
 depends: glew ^ 2.2.0
 depends: glfw ^ 3.3.8
 

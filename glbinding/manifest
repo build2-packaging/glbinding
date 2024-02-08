@@ -18,20 +18,13 @@ package-description-file: PACKAGE-README.md
 package-url: https://github.com/build2-packaging/glbinding
 package-email: packaging@build2.org
 
-tests: glbinding-tests == $
-tests: glbinding-tools == $
-examples: glbinding-examples == $
-
 depends: * build2 >= 0.16.0
 depends: * bpkg >= 0.16.0
 
 depends: libboost-thread ^ 1.78.0 ? ($config.glbinding.use_boost_thread)
 
+# Default CI Builds and Configuration
+#
 builds: default : -bindist ; Binary distributions don't need to be tested.
-
-# default-build-config: config.glbinding.opengl_context_testing=false ; Disable OpenGL context creation in tests for CI runs by default.
-
-# opengl-context-builds: default : &( +linux -bindist ) ; So far only Linux machines in the default class support GUI mocking.
-# opengl-context-build-config: config.glbinding.opengl_context_testing=true ; Enable OpenGL context creation in tests for target configurations that support GUI mocking.
 
 # boost-thread-build-config: config.glbinding.use_boost_thread=true

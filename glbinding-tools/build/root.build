@@ -15,13 +15,12 @@ cxx{*}: extension = cpp
 #
 test.target = $cxx.target
 
-config [bool] config.glbinding_tools.ci_mode ?= false
-opengl_context_testing = (!($config.glbinding_tools.ci_mode) || ($cxx.target.class == 'linux'))
+config [bool] config.glbinding_tools.opengl_context_testing ?= true
 
 # The tool executables will try to create a valid
 # OpenGL context and fail if this might not be possible.
 #
-exe{*}: test = $opengl_context_testing
+exe{*}: test = $config.glbinding_tools.opengl_context_testing
 
 # Default Library Dependencies
 #

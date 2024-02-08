@@ -21,11 +21,15 @@ package-email: packaging@build2.org
 depends: * build2 >= 0.16.0
 depends: * bpkg >= 0.16.0
 
+depends: glbinding == $
+
 depends: glfw ^ 3.3.8
 
 builds: default
 builds: -freebsd ; GLFW does not support FreeBSD
 builds: -( +macos &gcc ) ; GLFW does not support GCC on MacOS
 build-exclude: **-emcc* ; GLFW does not support Emscripten
+default-build-config: config.glbinding_tools.opengl_context_testing=false
 
-default-build-config: config.glbinding_tools.ci_mode=true
+opengl-context-builds: default : &( +linux -bindist )
+opengl-context-build-config: config.glbinding_tools.opengl_context_testing=true
