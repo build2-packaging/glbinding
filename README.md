@@ -1,25 +1,11 @@
-<h1 align="center">
-    build2 Package for glbinding
-</h1>
+# build2 Package for glbinding
 
-<p align="center">
-    <a href="https://glbinding.org/">glbinding</a> is a cross-platform C++ binding for the OpenGL API, generated using the gl.xml specification.
-</p>
+[glbinding](https://glbinding.org/) is a cross-platform C++ binding for the OpenGL API, generated using the gl.xml specification.
 
-<p align="center">
-    <a href="https://glbinding.org/">
-        <img src="https://img.shields.io/website/https/glbinding.org.svg?down_message=offline&label=Official&style=for-the-badge&up_color=blue&up_message=online">
-    </a>
-    <a href="https://github.com/build2-packaging/glbinding">
-        <img src="https://img.shields.io/website/https/github.com/build2-packaging/glbinding.svg?down_message=offline&label=build2&style=for-the-badge&up_color=blue&up_message=online">
-    </a>
-    <a href="https://cppget.org/glbinding">
-        <img src="https://img.shields.io/website/https/cppget.org/glbinding.svg?down_message=offline&label=cppget.org&style=for-the-badge&up_color=blue&up_message=online">
-    </a>
-    <a href="https://queue.cppget.org/glbinding">
-        <img src="https://img.shields.io/website/https/queue.cppget.org/glbinding.svg?down_message=empty&down_color=blue&label=queue.cppget.org&style=for-the-badge&up_color=orange&up_message=running">
-    </a>
-</p>
+[![Official](https://img.shields.io/website/https/github.com/cginternals/glbinding.svg?down_message=offline&label=Official&style=for-the-badge&up_color=blue&up_message=online)](https://github.com/cginternals/glbinding)
+[![build2](https://img.shields.io/website/https/github.com/build2-packaging/glbinding.svg?down_message=offline&label=build2&style=for-the-badge&up_color=blue&up_message=online)](https://github.com/build2-packaging/glbinding)
+[![cppget.org](https://img.shields.io/website/https/cppget.org/glbinding.svg?down_message=offline&label=cppget.org&style=for-the-badge&up_color=blue&up_message=online)](https://cppget.org/glbinding)
+[![queue.cppget.org](https://img.shields.io/website/https/queue.cppget.org/glbinding.svg?down_message=empty&down_color=blue&label=queue.cppget.org&style=for-the-badge&up_color=orange&up_message=running)](https://queue.cppget.org/glbinding)
 
 ## Usage
 Both libraries, `glbinding` and `glbinding-aux`, are provided in the same package `glbinding`.
