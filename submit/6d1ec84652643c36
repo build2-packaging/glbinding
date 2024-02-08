@@ -1,0 +1,8 @@
+: 1
+name: glbinding-tests
+version: 3.3.0
+type: exe
+language: c++
+project: glbinding
+summary: OpenGL loader C++ library based on gl.xml specification, tests
+license: MIT

@@ -1,0 +1,8 @@
+: 1
+name: glbinding-tools
+version: 3.3.0
+type: exe
+language: c++
+project: glbinding
+summary: OpenGL loader utilities and tools based on glbinding
+license: MIT
