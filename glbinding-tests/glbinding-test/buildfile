@@ -7,6 +7,6 @@ import libs += gtest%lib{gtest}
 import libs += gmock%lib{gmock}
 
 exe{glbinding-test}: cxx{* -Multi* -Regression_test_1*} $libs
-exe{glbinding-test}: cxx{Regression_test_1*}: include = $config.glbinding_tests.use_glfw_window
+exe{glbinding-test}: cxx{Regression_test_1*}: include = $opengl_context_testing
 
 cxx.poptions += -DBUILD_GPU_TESTS

@@ -29,21 +29,9 @@ depends: libboost-thread ^ 1.78.0 ? ($config.glbinding.use_boost_thread)
 
 builds: default : -bindist ; Binary distributions don't need to be tested.
 
-default-build-config:
-\
-config.glbinding_tests.use_glfw_window=false
-config.glbinding_tools.opengl_context_testing=false
-;
-Disable OpenGL context creation in tests by default for CI runs.
-\
+# default-build-config: config.glbinding.opengl_context_testing=false ; Disable OpenGL context creation in tests for CI runs by default.
 
-opengl-context-builds: linux : &default ; Only Linux machines in the default class support GUI mocking.
-opengl-context-build-config:
-\
-config.glbinding_tests.use_glfw_window=true
-config.glbinding_tools.opengl_context_testing=true
-;
-Enable OpenGL context creation in tests for target configurations that support GUI mocking.
-\
+# opengl-context-builds: default : &( +linux -bindist ) ; So far only Linux machines in the default class support GUI mocking.
+# opengl-context-build-config: config.glbinding.opengl_context_testing=true ; Enable OpenGL context creation in tests for target configurations that support GUI mocking.
 
 # boost-thread-build-config: config.glbinding.use_boost_thread=true

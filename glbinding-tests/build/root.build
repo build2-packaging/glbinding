@@ -16,4 +16,5 @@ test.target = $cxx.target
 
 exe{*}: test = true
 
-config [bool] config.glbinding_tests.use_glfw_window ?= false
+config [bool] config.glbinding_tests.ci_mode ?= false
+opengl_context_testing = (!($config.glbinding_tests.ci_mode) || ($cxx.target.class == 'linux'))
