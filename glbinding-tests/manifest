@@ -29,6 +29,3 @@ builds: default
 builds: -freebsd ; GLFW does not support FreeBSD.
 builds: -( +macos &gcc ) ; GLFW does not support GCC on MacOS.
 build-exclude: **-emcc* ; GLFW does not support Emscripten.
-
-default-build-config: config.glbinding_tests.use_glfw_window=false
-opengl-context-build-config: config.glbinding_tests.use_glfw_window=true ; Enable the construction and testing of GLFW windows.
