@@ -1,6 +1,6 @@
 : 1
 name: glbinding-tools
-version: 3.3.0
+version: 3.3.0+1
 type: exe
 language: c++
 project: glbinding

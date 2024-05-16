@@ -25,6 +25,11 @@ cxx.poptions += $include_dirs
 #
 {hbmia obja}{*}: cxx.poptions += -DGLBINDING_AUX_STATIC_BUILD
 {hbmis objs}{*}: cxx.poptions += -DGLBINDING_AUX_SHARED_BUILD
+#
+# Compilation might trigger the out-of-memory killer.
+# Affected files will be compiled serially.
+#
+source/obj{Meta_StringsByEnum}: cc.serialize = true
 
 # Export Options
 #
